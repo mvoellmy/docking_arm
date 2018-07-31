@@ -36,7 +36,9 @@ def make_fig():
     cups_plt = fig.add_subplot(1, 2, 2)
     hist_plt.plot(pressures)
 
+    # Plotting parameters
     square_width = 1
+    pressure_saturation = 500
 
     cups_plt.axis('off')
     cups_plt.set_aspect('equal')
@@ -46,9 +48,9 @@ def make_fig():
     cups_x = [-square_width/2, square_width/2, -square_width/2, square_width/2]
     cups_y = [square_width/2, square_width/2, -square_width/2, -square_width/2]
 
-    cups_plt.plot(cups_x, cups_y, marker='o', markersize='80', linestyle='None', rasterized='True')
-
     for cup_pressure, x, y in zip(pressure, cups_x, cups_y):
+        cup_color = (max(0, (pressure_saturation+cup_pressure)/pressure_saturation), min(1, cup_pressure/-pressure_saturation), 0)
+        cups_plt.plot(x, y, marker='o', markersize='80', linestyle='None', rasterized='True', color=cup_color)
         cups_plt.annotate(cup_pressure, xy=(x, y), horizontalalignment='center', verticalalignment='center')
 
 
@@ -57,8 +59,11 @@ with serial.Serial(params['port'], params['baudrate'], timeout=1) as ser:
         while True:
             # Read Serial
             line = str(ser.readline())
+
             line = line.replace("b'", "")
             line = line.replace("\\r\\n'", "")
+
+
 
             output = line.split(":", 1)
             if int(output[0]) < 4:
