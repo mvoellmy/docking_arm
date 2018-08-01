@@ -34,15 +34,11 @@ void loop() {
     // voltages[i] = sensorValue * (5.0 / 1023.0);
     float voltage = -sensorValue * (1000.0 / 1023.0);
 
-    // Serial.print(pins[i]);
-    // Serial.print(pins[i]);
     Serial.print(suction_cups[i]);
     Serial.println(voltage);
     // check http://forum.arduino.cc/index.php?topic=243660.0 for better conversion
-    delay(100);
-  }
-  delay(100);
-  
+    delay(25);
+  }  
 }
 
 
