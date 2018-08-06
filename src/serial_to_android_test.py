@@ -43,7 +43,7 @@ def make_fig():
     cups_plt = fig.add_subplot(1, 2, 2)
     hist_plt.plot(pressures[-history_frames:])
 
-    hist_plt.legend("0123", loc="lower right")
+    hist_plt.legend("1234", loc="lower right")
 
     hist_plt.set_xlabel("s/10")
     hist_plt.set_ylabel("mbar")
@@ -62,7 +62,7 @@ def make_fig():
     cups_x = [-square_width/2, square_width/2, -square_width/2, square_width/2]
     cups_y = [square_width/2, square_width/2, -square_width/2, -square_width/2]
 
-    cup_names = [0, 1, 2, 3]
+    cup_names = [1, 2, 3, 4]
 
     for cup_pressure, cup_name, x, y in zip(pressure, cup_names, cups_x, cups_y):
         cup_color = (max(0, (pressure_saturation+cup_pressure)/pressure_saturation), min(1, cup_pressure/-pressure_saturation), 0)
@@ -81,10 +81,10 @@ with serial.Serial(params['port'], params['baudrate'], timeout=1) as ser:
             line = line.decode("utf-8")
 
             output = line.split(":", 1)
-            if int(output[0]) < 4:
-                pressure[int(output[0])] = float(output[1])
+            if int(output[0]) < 5:
+                pressure[int(output[0])-1] = float(output[1])
 
-                if int(output[0]) == 3:
+                if int(output[0]) == 4:
                     pressures.append(np.copy(pressure).tolist())
 
                 if counts_since_draw > params['send_rate']/update_rate:

@@ -10,9 +10,9 @@
   http://www.arduino.cc/en/Tutorial/ReadAnalogVoltage
 */
 
-char *suction_cups[] = { "0:", "1:", "2:", "3:" };
+char *suction_cups[] = { "1:", "2:", "3:", "4:" };
 
-static const uint8_t pins[] = {0,1,2,3};
+static const uint8_t pins[] = {1,2,3,4};
 float voltages[4];
 
 
